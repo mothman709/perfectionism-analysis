@@ -1,0 +1,30 @@
+TITLE: Latent Profile Analysis of 32 Items with 3 Classes;
+
+DATA:
+  FILE = "C:\Users\mothm\OneDrive\Desktop\LPA\New Attempt with averages\To MplusC.csv";
+  FORMAT = FREE;
+
+VARIABLE:
+  NAMES = PID SC FQ FD FF UF SA PFS;
+  USEVARIABLES = SC FQ FD FF UF SA PFS;
+  IDVARIABLE = PID;
+  CLASSES = c(6);        ! change to c(1) c(2) c(4) etc.
+  MISSING = ALL (999);  ! change if your missing code differs
+
+ANALYSIS:
+  TYPE = MIXTURE;
+  ESTIMATOR = MLR;
+  STARTS = 1000 250;
+  STITERATIONS = 20;
+  LRTSTARTS = 0 0 500 200;
+
+MODEL:
+  %OVERALL%
+  ! default LPA
+
+OUTPUT:
+  SAMPSTAT TECH1 TECH4 TECH11 TECH14;
+
+SAVEDATA:
+  FILE IS "fe_facets_c3_probs.csv";
+  SAVE = CPROBABILITIES;
